@@ -1,7 +1,9 @@
 import os
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
 import datetime
 
+from adaptors.json_to_periods_entity import JSONToPeriodsEntityAdaptor
+from use_cases.compact_list_use_case import CompactListUseCase
 
 app = Flask(__name__)
 
@@ -15,8 +17,23 @@ def hello():
 
 @app.route("/custom", methods=['POST', ])
 def custom():
-    input1 = {}
-    input2 = {}
+    try:
+        input1 = request.form.get('input1')
+        input2 = request.form.get('input2')
+    except Exception as e:
+        return "Error: No inputs provided."
+
+    period_list1 = JSONToPeriodsEntityAdaptor(input1)
+    period_list2 = JSONToPeriodsEntityAdaptor(input2)
+
+    use_case = CompactListUseCase(period_list1)
+    period_list1 = use_case.run()
+
+    use_case = CompactListUseCase(period_list2)
+    period_list2 = use_case.run()
+
+
+
     now = {'date' : datetime.datetime.now().strftime("%m/%d/%Y, %H:%M:%S") }
     return jsonify(now)
 

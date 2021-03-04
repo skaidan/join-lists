@@ -1,4 +1,5 @@
 from datetime import date
+import datetime
 
 
 class PeriodsEntity(object):
@@ -10,6 +11,11 @@ class PeriodsEntity(object):
         start = period.pop('start',None)
         end = period.pop('end',None)
         custom = period
+        try:
+            start = datetime.datetime.strptime(start, '%Y-%m-%d').date()
+            end = datetime.datetime.strptime(end, '%Y-%m-%d').date()
+        except Exception as e:
+            print 'It was not possible to parse Period {start} - {end}'.format(start=start, end=end)
         if isinstance(start,date) and isinstance(end,date):
             self.start = start
             self.end = end
