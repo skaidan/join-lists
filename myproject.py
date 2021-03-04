@@ -1,23 +1,25 @@
 import os
 from flask import Flask, jsonify
-import json
 import datetime
 
 
 app = Flask(__name__)
 
+#Work with default values
 @app.route("/")
 def hello():
+    input1 = {}
+    input2 = {}
     return "<h1 style='color:blue'>Hello Here!</h1>"
 
-@app.route("/gonzo")
-def gonzo():
-    return "<h1 style='color:blue'>Hello Gonzo!</h1>"
 
-@app.route("/ahora")
-def ahora():
+@app.route("/custom", methods=['POST', ])
+def custom():
+    input1 = {}
+    input2 = {}
     now = {'date' : datetime.datetime.now().strftime("%m/%d/%Y, %H:%M:%S") }
     return jsonify(now)
+
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 50000))
