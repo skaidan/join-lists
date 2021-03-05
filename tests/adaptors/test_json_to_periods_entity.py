@@ -12,7 +12,8 @@ class JSONToPeriodsEntityTestCase(unittest.TestCase):
         self.assertEqual(len(periods), 8)
         self.assertTrue(isinstance(periods[0], PeriodsEntity))
 
-    def _default_input1(self):
+    @staticmethod
+    def _default_input1():
         return [
             {
                 "start": "2021-02-01",

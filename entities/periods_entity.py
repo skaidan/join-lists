@@ -8,15 +8,15 @@ class PeriodsEntity(object):
     custom_values = {}
 
     def __init__(self, period):
-        start = period.pop('start',None)
-        end = period.pop('end',None)
+        start = period.pop('start', None)
+        end = period.pop('end', None)
         custom = period
         try:
             start = datetime.datetime.strptime(start, '%Y-%m-%d').date()
             end = datetime.datetime.strptime(end, '%Y-%m-%d').date()
         except Exception as e:
             print 'It was not possible to parse Period {start} - {end}'.format(start=start, end=end)
-        if isinstance(start,date) and isinstance(end,date):
+        if isinstance(start, date) and isinstance(end, date):
             self.start = start
             self.end = end
             self.custom_values = custom
@@ -26,13 +26,13 @@ class PeriodsEntity(object):
 
     def copy(self):
         self_dicted = self.__dict__
-        for key,value in self.custom_values.items():
+        for key, value in self.custom_values.items():
             self_dicted[key] = value
         self_dicted.pop('custom_values')
         new_period = PeriodsEntity(self.__dict__)
         return new_period
 
-    def has_same_custom_values(self,period):
+    def has_same_custom_values(self, period):
         if len(self.custom_values) is len(period.custom_values):
             for key, val in self.custom_values.iteritems():
                 if key not in period.custom_values:
@@ -52,16 +52,12 @@ class PeriodsEntity(object):
         if left.end <= right.start:
             self._separated_periods(first, left, right, second)
 
-
-
-            #loingituh 2 y first y second are equals
-
-
-
+            # loingituh 2 y first y second are equals
 
         return [first, second, third]
 
-    def _separated_periods(self, first, left, right, second):
+    @staticmethod
+    def _separated_periods(first, left, right, second):
         first.end = left.end
         first.custom_values = left.custom_values
         second.start = right.start
@@ -72,6 +68,4 @@ class PeriodsEntity(object):
         if self.start <= period.start:
             return self, period
         else:
-            return period , self
-
-
+            return period, self

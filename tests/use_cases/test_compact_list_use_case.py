@@ -1,5 +1,4 @@
 import unittest
-from datetime import date, timedelta
 import datetime
 
 from entities.periods_entity import PeriodsEntity
@@ -10,10 +9,10 @@ class CompactListUseCaseTestCase(unittest.TestCase):
 
     def test_when_list_does_not_contain_continuous_periods_then_list_is_not_modified(self):
         periods = [PeriodsEntity({'start': "2021-02-23", 'end': "2021-02-23", 'first': 1}), PeriodsEntity(
-            {'start': "2021-02-24", 'end': "2021-02-25", 'first': 1})]
+            {'start': "2021-02-25", 'end': "2021-02-25", 'first': 1})]
         use_case = CompactListUseCase(periods)
         compacted_list = use_case.run()
-        self.assertEqual(len(compacted_list), 1)
+        self.assertEqual(len(compacted_list), 2)
         self.assertEqual(compacted_list[0].end, datetime.date(2021, 2, 25))
 
     def test_when_list_contain_two_continuous_periods_then_they_are_compacted_into_one(self):

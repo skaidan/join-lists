@@ -10,5 +10,5 @@ class JSONToPeriodsEntityAdaptor(object):
     def convert(self):
         periods = []
         for item in self.data:
-            periods = periods + [PeriodsEntity(item),]
+            periods = periods + [PeriodsEntity(item), ]
         return periods

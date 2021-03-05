@@ -1,5 +1,4 @@
 import unittest
-from datetime import date, timedelta
 from entities.periods_entity import PeriodsEntity
 
 
@@ -34,7 +33,7 @@ class PeriodsEntityTestCase(unittest.TestCase):
 
     def test_when_a_period_entity_is_copied_then_a_new_object_is_created(self):
         period = {'start': "2021-02-23", 'end': "2021-02-23", 'first': 1,
-                        'second': 2}
+                  'second': 2}
         period = PeriodsEntity(period)
         new_period = period.copy()
         period.custom_values['first'] = 3
