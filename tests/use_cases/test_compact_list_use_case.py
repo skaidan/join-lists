@@ -13,7 +13,8 @@ class CompactListUseCaseTestCase(unittest.TestCase):
         use_case = CompactListUseCase(periods)
         compacted_list = use_case.run()
         self.assertEqual(len(compacted_list), 2)
-        self.assertEqual(compacted_list[0].end, datetime.date(2021, 2, 25))
+        self.assertEqual(compacted_list[0].end, datetime.date(2021, 2, 23))
+        self.assertEqual(compacted_list[1].start, datetime.date(2021, 2, 25))
 
     def test_when_list_contain_two_continuous_periods_then_they_are_compacted_into_one(self):
         periods = [PeriodsEntity({'start': "2021-02-23", 'end': "2021-02-23", 'first': 1}), PeriodsEntity(

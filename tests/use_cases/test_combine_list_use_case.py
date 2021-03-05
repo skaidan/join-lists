@@ -1,14 +1,15 @@
-import os
-from flask import Flask, jsonify, request
+import unittest
 
-from adaptors.json_to_periods_entity import JSONToPeriodsEntityAdaptor
-from use_cases.combine_lists_use_case import CombineListsUseCase
-from use_cases.compact_list_use_case import CompactListUseCase
-
-app = Flask(__name__)
+from myproject import build_list
 
 
-# Work with default values
+class CombineListsUseCaseTestCase(unittest.TestCase):
+    def test_when_two_lists_are_merged_then_one_list_with_both_custom_fields_grouped_too(self):
+        input1 = _default_input1()
+        input2 = _default_input2()
+        final = build_list(input1, input2)
+        self.assertEqual(True, False)
+
 def _default_input1():
     return [
         {
@@ -94,40 +95,6 @@ def _default_input2():
     ]
 
 
-@app.route("/")
-def hello():
-    input1 = _default_input1()
-    input2 = _default_input2()
-    final = build_list(input1, input2)
-    return jsonify(final)
 
-
-@app.route("/custom", methods=['POST', ])
-def custom():
-    try:
-        input1 = request.form.get('input1')
-        input2 = request.form.get('input2')
-    except Exception as e:
-        return "Error: No inputs provided."
-
-    final = build_list(input1, input2)
-    return jsonify(final)
-
-
-def build_list(input1, input2):
-    period_list1 = JSONToPeriodsEntityAdaptor(input1)
-    period_list2 = JSONToPeriodsEntityAdaptor(input2)
-    use_case = CompactListUseCase(period_list1.convert())
-    period_list1 = use_case.run()
-    use_case = CompactListUseCase(period_list2.convert())
-    period_list2 = use_case.run()
-    use_case = CombineListsUseCase(period_list1, period_list2)
-    combined = use_case.run()
-    use_case = CompactListUseCase(combined)
-    final = use_case.run()
-    return final
-
-
-if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 50000))
-    app.run(debug=True, host='0.0.0.0', port=port)
+if __name__ == '__main__':
+    unittest.main()
