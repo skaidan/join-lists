@@ -48,7 +48,7 @@ class PeriodsEntity(object):
         reduxed = []
         for i in periods:
             if i.start:
-                reduxed = reduxed + [i,]
+                reduxed = reduxed + [i, ]
         return reduxed
 
     def _preorder_periods(self, period):

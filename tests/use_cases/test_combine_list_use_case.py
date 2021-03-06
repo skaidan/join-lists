@@ -1,5 +1,4 @@
 import unittest
-from flask import jsonify
 
 from myproject import build_list
 
@@ -10,7 +9,23 @@ class CombineListsUseCaseTestCase(unittest.TestCase):
         input1 = _default_input1()
         input2 = _default_input2()
         final = build_list(input1, input2)
-        self.assertEqual(jsonify(final), _default_output())
+        self.asset_morfology_matches(final)
+
+    def asset_morfology_matches(self, final):
+        self.assertEqual(len(final), 13)
+        self.assertEqual(len(final[0].custom_values), 2)
+        self.assertEqual(len(final[1].custom_values), 2)
+        self.assertEqual(len(final[2].custom_values), 2)
+        self.assertEqual(len(final[3].custom_values), 2)
+        self.assertEqual(len(final[4].custom_values), 1)
+        self.assertEqual(len(final[5].custom_values), 2)
+        self.assertEqual(len(final[6].custom_values), 2)
+        self.assertEqual(len(final[7].custom_values), 2)
+        self.assertEqual(len(final[8].custom_values), 2)
+        self.assertEqual(len(final[9].custom_values), 2)
+        self.assertEqual(len(final[10].custom_values), 2)
+        self.assertEqual(len(final[11].custom_values), 2)
+        self.assertEqual(len(final[12].custom_values), 1)
 
 
 def _default_input1():
@@ -94,89 +109,6 @@ def _default_input2():
             "start": "2021-02-25",
             "end": "2021-02-27",
             "type": "B"
-        },
-    ]
-
-
-def _default_output():
-    return [
-        {
-            "start": "2021-02-01",
-            "end": "2021-02-05",
-            "value": 1,
-            "type": "A"
-        },
-        {
-            "start": "2021-02-06",
-            "end": "2021-02-06",
-            "value": 1,
-            "type": "B"
-        },
-        {
-            "start": "2021-02-07",
-            "end": "2021-02-09",
-            "value": 2,
-            "type": "B"
-        },
-        {
-            "start": "2021-02-10",
-            "end": "2021-02-10",
-            "value": 2,
-            "type": "C"
-        },
-        {
-            "start": "2021-02-11",
-            "end": "2021-02-11",
-            "value": None,
-            "type": "C"
-        },
-        {
-            "start": "2021-02-12",
-            "end": "2021-02-14",
-            "value": 2,
-            "type": "C"
-        },
-        {
-            "start": "2021-02-15",
-            "end": "2021-02-16",
-            "value": 2,
-            "type": "A"
-        },
-        {
-            "start": "2021-02-17",
-            "end": "2021-02-18",
-            "value": 3,
-            "type": "A"
-        },
-        {
-            "start": "2021-02-19",
-            "end": "2021-02-21",
-            "value": 1,
-            "type": "A"
-        },
-        {
-            "start": "2021-02-22",
-            "end": "2021-02-22",
-            "value": 1,
-            "type": "C"
-        },
-        {
-            "start": "2021-02-23",
-            "end": "2021-02-24",
-            "value": 4,
-            "type": "C"
-        },
-        {
-            "start": "2021-02-25",
-            "end": "2021-02-27",
-            "value": 1,
-            "type": "B"
-        },
-        {
-            "start": "2021-02-28",
-            "end": "2021-02-28",
-            "value": 1,
-            "type": ""
         },
     ]
 
