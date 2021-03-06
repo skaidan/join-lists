@@ -2,6 +2,7 @@ import os
 from flask import Flask, jsonify, request
 
 from adaptors.json_to_periods_entity import JSONToPeriodsEntityAdaptor
+from presenter.list_of_outputs import ListOfOutputsPresenter
 from use_cases.combine_lists_use_case import CombineListsUseCase
 from use_cases.compact_list_use_case import CompactListUseCase
 
@@ -95,23 +96,12 @@ def _default_input2():
 
 
 @app.route("/")
-def hello():
+def default():
     input1 = _default_input1()
     input2 = _default_input2()
     final = build_list(input1, input2)
-    return jsonify(final)
-
-
-@app.route("/custom", methods=['POST', ])
-def custom():
-    try:
-        input1 = request.form.get('input1')
-        input2 = request.form.get('input2')
-    except Exception as e:
-        return "Error: No inputs provided."
-
-    final = build_list(input1, input2)
-    return jsonify(final)
+    presenter = ListOfOutputsPresenter(final)
+    return str(presenter.present())
 
 
 def build_list(input1, input2):
