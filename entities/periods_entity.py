@@ -25,11 +25,11 @@ class PeriodsEntity(object):
             self = None
 
     def copy(self):
-        self_dicted = self.__dict__
-        for key, value in self.custom_values.items():
-            self_dicted[key] = value
-        self_dicted.pop('custom_values')
-        new_period = PeriodsEntity(self.__dict__)
+        new_period = PeriodsEntity({})
+        new_period.start = self.start
+        new_period.end = self.end
+        if self.custom_values:
+            new_period.custom_values = dict(self.custom_values)
         return new_period
 
     def has_same_custom_values(self, period):
